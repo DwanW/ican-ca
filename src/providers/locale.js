@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-const LocaleContext = createContext('');
+const LocaleContext = createContext({ locale: 'en', changeLocale: () => { } });
 
 const LocaleProvider = ({ children }) => {
   const [locale, setLocale] = useState('en');
@@ -27,10 +27,11 @@ LocaleProvider.propTypes = {
 const useLocale = () => {
   const context = useContext(LocaleContext);
 
+  console.log("context", context)
   if (!context) {
     throw new Error('useLocale must be used within an LocaleProvider');
   }
-  
+
   return context;
 };
 
