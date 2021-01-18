@@ -50,7 +50,7 @@ export const BlogIndexTemplate = ({
         posts && !!posts.length
           ? byCategory(byDate(posts), title, contentType)
           : []
-
+      console.log(posts)
       let queryObj = location.search.replace('?', '')
       queryObj = qs.parse(queryObj)
 

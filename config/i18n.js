@@ -9,7 +9,8 @@ module.exports = {
       defaultTitle: `Gatsby Starter CMS`,
       defaultDescription: `Gatsby example site using Markdown, i18n and CMS`,
     },
-    cn: {
+    zh: {
+      default: false,
       path: `zh`,
       locale: `zh-CN`,
       dateFormat: `DD/MM/YYYY`,
