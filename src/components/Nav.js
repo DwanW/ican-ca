@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Location } from '@reach/router'
 import { Link } from 'gatsby'
-import LocalizedLink from './LocalizedLink'
+// import LocalizedLink from './LocalizedLink'
 import { Menu, X } from 'react-feather'
 import Logo from './Logo'
 import Languages from './Languages';
@@ -43,7 +43,7 @@ export class Navigation extends Component {
     const { active } = this.state,
       { subNav } = this.props,
       NavLink = ({ to, className, children, ...props }) => (
-        <LocalizedLink
+        <Link
           to={to}
           className={`NavLink ${
             to === this.state.currentPath ? 'active' : ''
@@ -56,7 +56,7 @@ export class Navigation extends Component {
           {...props}
         >
           {children}
-        </LocalizedLink>
+        </Link>
       )
 
     return (
