@@ -100,7 +100,7 @@ collections: # A list of collections the CMS should be able to edit
 
       - file: 'content/pages/contact.zh.md'
         label: 'Contact Page (ZH)'
-        name: 'contact-page'
+        name: 'contact-page-zh'
         fields:
           - {
               label: Template,
@@ -215,7 +215,7 @@ collections: # A list of collections the CMS should be able to edit
 
       - file: 'content/pages/blog.zh.md'
         label: 'Blog Page (ZH)'
-        name: 'blog-page'
+        name: 'blog-page-zh'
         fields:
           - {
               label: Template,
