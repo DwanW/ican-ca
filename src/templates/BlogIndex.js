@@ -121,7 +121,7 @@ export const pageQuery = graphql`
   ## Use GraphiQL interface (http://localhost:8000/___graphql)
   ## $id is processed via gatsby-node.js
   ## query name must be unique to this file
-  query BlogIndex($id: String!) {
+  query BlogIndex($id: String!, $locale: String!) {
     page: markdownRemark(id: { eq: $id }) {
       ...Meta
       fields {
@@ -137,7 +137,9 @@ export const pageQuery = graphql`
     }
 
     posts: allMarkdownRemark(
-      filter: { fields: { contentType: { eq: "posts" } } }
+      filter: { 
+        fields: { contentType: { eq: "posts" }, locale: { eq: $locale } } 
+      }
       sort: { order: DESC, fields: [frontmatter___date] }
     ) {
       edges {

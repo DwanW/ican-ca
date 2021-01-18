@@ -3,6 +3,7 @@ import { Location } from '@reach/router'
 import { Link } from 'gatsby'
 import { Menu, X } from 'react-feather'
 import Logo from './Logo'
+import Languages from './Languages';
 
 import './Nav.css'
 
@@ -111,6 +112,7 @@ export class Navigation extends Component {
             </div>
             <NavLink to="/default/">Default</NavLink>
             <NavLink to="/contact/">Contact</NavLink>
+            <Languages />
           </div>
           <button
             className="Button-blank Nav--MenuButton"

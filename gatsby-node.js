@@ -1,7 +1,21 @@
 const _ = require('lodash')
 const path = require('path')
-const { createFilePath } = require('gatsby-source-filesystem')
+const locales = require('./config/i18n')
+// const { createFilePath } = require('gatsby-source-filesystem')
 const { fmImagesToRelative } = require('gatsby-remark-relative-images')
+
+const {
+  localizedSlug,
+  removeTrailingSlash
+} = require('./src/utils/gatsby-node-fn');
+
+// exports.onCreatePage = ({ page, actions,}) => {
+//   const {createPage, deletePage} =actions;
+
+//   deletePage(page);
+
+//   Ob
+// }
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
@@ -19,6 +33,8 @@ exports.createPages = ({ actions, graphql }) => {
             fields {
               slug
               contentType
+              locale
+              isDefaultLang
             }
           }
         }
@@ -34,26 +50,34 @@ exports.createPages = ({ actions, graphql }) => {
 
     const contentTypes = _.groupBy(mdFiles, 'node.fields.contentType')
 
+    // iterate though object with key: array pair
     _.each(contentTypes, (pages, contentType) => {
       const pagesToCreate = pages.filter(page =>
         // get pages with template field
         _.get(page, `node.frontmatter.template`)
       )
+      // if pages to create is 0; return
       if (!pagesToCreate.length) return console.log(`Skipping ${contentType}`)
 
       console.log(`Creating ${pagesToCreate.length} ${contentType}`)
 
       pagesToCreate.forEach((page, index) => {
+        const { slug, isDefaultLang, locale} = page.node.fields
+        const { title, template } = page.node.frontmatter
         const id = page.node.id
+
+
         createPage({
           // page slug set in md frontmatter
-          path: page.node.fields.slug,
+          path: removeTrailingSlash(localizedSlug({isDefaultLang, locale, slug})),
           component: path.resolve(
-            `src/templates/${String(page.node.frontmatter.template)}.js`
+            `src/templates/${String(template)}.js`
           ),
           // additional data can be passed via context
           context: {
-            id
+            id,
+            title,
+            locale
           }
         })
       })
@@ -74,11 +98,19 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     const fileNode = getNode(node.parent)
     const parsedFilePath = path.parse(fileNode.relativePath)
 
+    const fileBaseName =  parsedFilePath.name.split(".")[0] // index.en.md => index
+    const LangExtension = parsedFilePath.name.split(".")[1] // index.en.md => en
+    const defaultLang = _.findKey(locales, obj => obj.default === true) // en, zh
+
+    const isDefaultLang = LangExtension === defaultLang // true, false
+
+    const language = isDefaultLang ? defaultLang : LangExtension // en, zh
+
     if (_.get(node, 'frontmatter.slug')) {
       slug = `/${node.frontmatter.slug.toLowerCase()}/`
     } else if (
       // home page gets root slug
-      parsedFilePath.name === 'home' &&
+      fileBaseName === 'home' &&
       parsedFilePath.dir === 'pages'
     ) {
       slug = `/`
@@ -87,7 +119,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
         node.frontmatter.title
       )}/`
     } else if (parsedFilePath.dir === '') {
-      slug = `/${parsedFilePath.name}/`
+      slug = `/${fileBaseName}/`
     } else {
       slug = `/${parsedFilePath.dir}/`
     }
@@ -103,6 +135,18 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       node,
       name: 'contentType',
       value: parsedFilePath.dir
+    })
+
+    createNodeField({
+      node,
+      name: 'locale',
+      value: language
+    })
+
+    createNodeField({
+      node,
+      name: 'isDefaultLang',
+      value: isDefaultLang
     })
   }
 }
