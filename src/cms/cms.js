@@ -3,9 +3,9 @@ import CMS from 'netlify-cms-app'
 import './cms-utils'
 
 import { HomePageTemplate } from '../templates/HomePage'
-import { ComponentsPageTemplate } from '../templates/ComponentsPage'
+import { CovidPageTemplate } from '../templates/CovidPage'
 import { ContactPageTemplate } from '../templates/ContactPage'
-import { DefaultPageTemplate } from '../templates/DefaultPage'
+import { AboutPageTemplate } from '../templates/AboutPage'
 import { BlogIndexTemplate } from '../templates/BlogIndex'
 import { SinglePostTemplate } from '../templates/SinglePost'
 import uploadcare from 'netlify-cms-media-library-uploadcare'
@@ -26,14 +26,28 @@ if (
 CMS.registerPreviewTemplate('home-page', ({ entry }) => (
   <HomePageTemplate {...entry.toJS().data} />
 ))
-CMS.registerPreviewTemplate('components-page', ({ entry }) => (
-  <ComponentsPageTemplate {...entry.toJS().data} />
+CMS.registerPreviewTemplate('home-page-zh', ({ entry }) => (
+  <HomePageTemplate {...entry.toJS().data} />
+))
+CMS.registerPreviewTemplate('covid-page', ({ entry }) => (
+  <CovidPageTemplate {...entry.toJS().data} />
+))
+CMS.registerPreviewTemplate('covid-page-zh', ({ entry }) => (
+  <CovidPageTemplate {...entry.toJS().data} />
 ))
 CMS.registerPreviewTemplate('contact-page', ({ entry }) => (
   <ContactPageTemplate {...entry.toJS().data} />
 ))
+CMS.registerPreviewTemplate('contact-page-zh',({ entry }) => (
+  <ContactPageTemplate {...entry.toJS().data} />
+))
+
 CMS.registerPreviewTemplate('infoPages', ({ entry }) => (
-  <DefaultPageTemplate {...entry.toJS().data} />
+  <AboutPageTemplate {...entry.toJS().data} />
+))
+
+CMS.registerPreviewTemplate('infoPages-zh', ({ entry }) => (
+  <AboutPageTemplate {...entry.toJS().data} />
 ))
 CMS.registerPreviewTemplate('blog-page', ({ entry }) => (
   <BlogIndexTemplate {...entry.toJS().data} />

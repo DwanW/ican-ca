@@ -13,11 +13,12 @@ const Languages = () => {
 
     const url = window.location.pathname;
 
-    if (url === "/") return lang === "en" ?
+    if (url === "/" || url === "/zh") return lang === "en" ?
       navigate(`/`) :
       navigate(`/${lang}`);
 
     const hasLocale = window.location.pathname.split("/")[1] === "zh"
+    console.log(window.location.pathname)
 
     if (hasLocale){ return lang === "en" ? 
       navigate(`${url.replace("/zh", "")}`) :
