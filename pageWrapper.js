@@ -3,8 +3,10 @@ import { useLocale } from './src/providers/locale'
 
 const PageWrapper = ({ children, pageContext: { locale } }) => {
     const { changeLocale } = useLocale();
-
-    changeLocale(locale)
+    
+    useEffect(() => {
+        changeLocale(locale)
+    }, [locale, changeLocale])
     
     return (
         <>

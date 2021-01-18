@@ -5,7 +5,7 @@ const { PageWrapper } = require('./pageWrapper')
 
 exports.wrapPageElement = ({element, props}) => {
     return (
-        <LocaleProvider >
+        <LocaleProvider>
             <PageWrapper {...props}>{element}</PageWrapper>
         </LocaleProvider>
     )
