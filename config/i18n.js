@@ -1,4 +1,4 @@
-module.exports = {
+const locales = {
     en: {
       default: true,
       path: `en`,
@@ -20,4 +20,5 @@ module.exports = {
       defaultDescription: `使用Markdown，i18n和CMS的Gatsby示例站点`,
     },
   }
-  
+
+export default locales
