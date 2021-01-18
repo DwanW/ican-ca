@@ -27,7 +27,7 @@ LocaleProvider.propTypes = {
 const useLocale = () => {
   const context = useContext(LocaleContext);
 
-  console.log("context", context)
+  // console.log("context", context)
   if (!context) {
     throw new Error('useLocale must be used within an LocaleProvider');
   }
