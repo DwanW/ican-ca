@@ -33,6 +33,7 @@ export default ({ children, meta, title }) => {
                 }
                 frontmatter {
                   title
+                  localeText
                 }
               }
             }

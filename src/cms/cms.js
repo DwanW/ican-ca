@@ -17,10 +17,10 @@ if (
   window.localStorage.getItem('netlifySiteURL')
 ) {
   CMS.registerPreviewStyle(
-    window.localStorage.getItem('netlifySiteURL') + '/styles.css'
+    window.localStorage.getItem('netlifySiteURL') + 'admin/admin.css'
   )
 } else {
-  CMS.registerPreviewStyle('/styles.css')
+  CMS.registerPreviewStyle('admin/admin.css')
 }
 
 CMS.registerPreviewTemplate('home-page', ({ entry }) => (
@@ -50,6 +50,9 @@ CMS.registerPreviewTemplate('infoPages-zh', ({ entry }) => (
   <AboutPageTemplate {...entry.toJS().data} />
 ))
 CMS.registerPreviewTemplate('blog-page', ({ entry }) => (
+  <BlogIndexTemplate {...entry.toJS().data} />
+))
+CMS.registerPreviewTemplate('blog-page-zh', ({ entry }) => (
   <BlogIndexTemplate {...entry.toJS().data} />
 ))
 CMS.registerPreviewTemplate('posts', ({ entry }) => (

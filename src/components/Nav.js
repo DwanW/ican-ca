@@ -12,7 +12,7 @@ export class Navigation extends Component {
   state = {
     active: false,
     activeSubNav: false,
-    currentPath: false
+    currentPath: ""
   }
 
   componentDidMount = () =>
@@ -46,7 +46,7 @@ export class Navigation extends Component {
         <LocalizedLink
           to={to}
           className={`NavLink ${
-            to === this.state.currentPath ? 'active' : ''
+            to === this.state.currentPath || "/zh" + to === this.state.currentPath || "/zh" + to === this.state.currentPath + "/" ? 'active' : ''
           } ${className}`}
           onClick={this.handleLinkClick}
           onKeyDown={this.handleLinkKeyDown}
@@ -58,6 +58,7 @@ export class Navigation extends Component {
           {children}
         </LocalizedLink>
       )
+      console.log(subNav)
 
     return (
       <nav className={`Nav ${active ? 'Nav-active' : ''}`}>
@@ -73,8 +74,8 @@ export class Navigation extends Component {
             <Logo />
           </Link>
           <div className="Nav--Links">
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/covid/">COVID</NavLink>
+            <NavLink to="/" localeText="主页">Home</NavLink>
+            <NavLink to="/covid/" localeText="新冠">COVID</NavLink>
             <div
               className={`Nav--Group ${
                 this.state.activeSubNav === 'posts' ? 'active' : ''
@@ -94,9 +95,9 @@ export class Navigation extends Component {
                 aria-label="Navigation"
                 role="button"
               >
-                Blog
+                {this.props.location.pathname.match(/^\/zh/)? "博客":"Blog"} 
                 <div className="Nav--GroupLinks">
-                  <NavLink to="/blog/" className="Nav--GroupLink">
+                  <NavLink to="/blog/" className="Nav--GroupLink" localeText="全部内容">
                     All Posts
                   </NavLink>
                   {subNav.posts.map((link, index) => (
@@ -104,6 +105,7 @@ export class Navigation extends Component {
                       to={link.slug}
                       key={'posts-subnav-link-' + index}
                       className="Nav--GroupLink"
+                      localeText={link.localeText}
                     >
                       {link.title}
                     </NavLink>
@@ -111,8 +113,8 @@ export class Navigation extends Component {
                 </div>
               </span>
             </div>
-            <NavLink to="/about/">About</NavLink>
-            <NavLink to="/contact/">Contact</NavLink>
+            <NavLink to="/about/" localeText="关于">About</NavLink>
+            <NavLink to="/contact/" localeText="联系">Contact</NavLink>
             <Languages />
           </div>
           <button
